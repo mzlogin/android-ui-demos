@@ -8,18 +8,16 @@ import org.mazhuang.androiduidemos.adapter.MyExpandableListAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MyExpandableListAdapter mAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAdapter = new MyExpandableListAdapter(this);
+        MyExpandableListAdapter adapter = new MyExpandableListAdapter(this);
         ExpandableListView listView = (ExpandableListView) findViewById(R.id.list);
         if (listView != null) {
-            listView.setAdapter(mAdapter);
-            listView.setOnChildClickListener(mAdapter);
+            listView.setAdapter(adapter);
+            listView.setOnChildClickListener(adapter);
         }
     }
 

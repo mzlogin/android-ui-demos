@@ -9,4 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.mazhuang.androiduidemos.activity.NotificationDemoActivity">
 
+    <Button
+        android:id="@+id/simpleNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/simple_notification" />
 </RelativeLayout>
