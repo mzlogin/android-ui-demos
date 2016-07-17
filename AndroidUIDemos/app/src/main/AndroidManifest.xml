@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.FragmentUpdateUIActivity" />
-        <activity android:name=".activity.NotificationDemoActivity"></activity>
+        <activity android:name=".activity.NotificationDemoActivity" />
+        <activity android:name=".activity.TrafficBarViewActivity"></activity>
     </application>
 
 </manifest>

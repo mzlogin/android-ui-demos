@@ -11,6 +11,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import org.mazhuang.androiduidemos.R;
+import org.mazhuang.androiduidemos.activity.TrafficBarViewActivity;
 import org.mazhuang.androiduidemos.activity.FragmentUpdateUIActivity;
 import org.mazhuang.androiduidemos.activity.NotificationDemoActivity;
 
@@ -22,15 +23,19 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter implement
 
     private String[] mGroups = {
             "Fragments",
-            "Notifications"
+            "Notifications",
+            "Custom Views"
     };
 
     private ListItem[][] mChildren = {
             { // Fragments
-                    new ListItem("update ui after popBackStack", FragmentUpdateUIActivity.class)
+                    new ListItem("Update UI after popBackStack", FragmentUpdateUIActivity.class)
             },
             { // Notifications
-                    new ListItem("test Notifications", NotificationDemoActivity.class)
+                    new ListItem("Test Notifications", NotificationDemoActivity.class)
+            },
+            {// Show Custom Views
+                    new ListItem("TrafficBarView", TrafficBarViewActivity.class)
             }
     };
 
