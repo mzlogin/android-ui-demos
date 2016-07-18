@@ -2,35 +2,29 @@ package org.mazhuang.androiduidemos.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.text.NoCopySpan;
 import android.util.AttributeSet;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-import org.mazhuang.androiduidemos.R;
-
 import java.util.List;
-
-import javax.xml.transform.TransformerFactory;
 
 /**
  * Created by mazhuang on 2016/7/17.
  */
 public class TrafficBarView extends ImageView {
     private List<TrafficSegment> mData;
-    private int mTotalDistance;
     private int mNoDateColor = Color.argb(255, 26, 166, 239);
     private int mGoodColor = Color.parseColor("#05C300");
     private int mOkayColor = Color.parseColor("#FFD615");
     private int mBadColor = Color.argb(255, 255, 93, 91);
     private int mVeryBadColor = Color.argb(255, 179, 17, 15);
-    private Bitmap mSrcBitmap;
     private Paint mPaint;
     private RectF mColorRectF;
+    private boolean mIsAfterLayout;
 
     public TrafficBarView(Context context) {
         super(context);
@@ -48,14 +42,28 @@ public class TrafficBarView extends ImageView {
     }
 
     public void init() {
-        mSrcBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        setImageBitmap(mSrcBitmap);
         mPaint = new Paint();
         mColorRectF = new RectF();
+        final ViewTreeObserver viewTreeObserver = getViewTreeObserver();
+        if (viewTreeObserver.isAlive()) {
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    mIsAfterLayout = true;
+                    if (mData != null) {
+                        update(mData);
+                    }
+                }
+            });
+        }
     }
 
     public void update(List<TrafficSegment> segments) {
         mData = segments;
+        if (!mIsAfterLayout) {
+            return;
+        }
         Bitmap src = produceFinalBitmap();
         if (src != null) {
             setImageBitmap(src);
@@ -66,17 +74,19 @@ public class TrafficBarView extends ImageView {
         if (mData == null) {
             return null;
         } else {
-            mTotalDistance = 0;
+            float totalDistance = 0.0f;
             for (TrafficSegment segment : mData) {
-                mTotalDistance += segment.mLength;
+                totalDistance += segment.mLength;
             }
 
             mPaint.setStyle(Paint.Style.FILL);
 
-            Bitmap fakeCanvas = Bitmap.createBitmap(mSrcBitmap.getWidth(), mSrcBitmap.getHeight(),
+            int width = getWidth();
+            int height = getHeight();
+
+            Bitmap fakeCanvas = Bitmap.createBitmap(width, height,
                     Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(fakeCanvas);
-            float totalDistance = mTotalDistance;
             float drawedDistance = 0.0f;
             for (TrafficSegment segment : mData) {
                 int color = mNoDateColor;
@@ -99,10 +109,10 @@ public class TrafficBarView extends ImageView {
                 }
                 mPaint.setColor(color);
 
-                float bottom = mSrcBitmap.getHeight() * ((totalDistance - drawedDistance) / totalDistance);
+                float bottom = height * ((totalDistance - drawedDistance) / totalDistance);
                 drawedDistance += segment.mLength;
-                float top = mSrcBitmap.getHeight() * ((totalDistance - drawedDistance) / totalDistance);
-                mColorRectF.set(0.0f, top, mSrcBitmap.getWidth(), bottom);
+                float top = height * ((totalDistance - drawedDistance) / totalDistance);
+                mColorRectF.set(0.0f, top, width, bottom);
 
                 canvas.drawRect(mColorRectF, mPaint);
             }
