@@ -2,6 +2,7 @@ package org.mazhuang.androiduidemos.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,6 +10,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+
+import org.mazhuang.androiduidemos.R;
 
 import java.util.List;
 
@@ -22,9 +25,12 @@ public class TrafficBarView extends ImageView {
     private int mOkayColor = Color.parseColor("#FFD615");
     private int mBadColor = Color.argb(255, 255, 93, 91);
     private int mVeryBadColor = Color.argb(255, 179, 17, 15);
+    private int mPassColor = Color.argb(255, 204, 204, 204);
     private Paint mPaint;
     private RectF mColorRectF;
     private boolean mIsAfterLayout;
+    private float mTotalDistance;
+    private int mDistanceToEnd;
 
     public TrafficBarView(Context context) {
         super(context);
@@ -52,15 +58,20 @@ public class TrafficBarView extends ImageView {
                     getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     mIsAfterLayout = true;
                     if (mData != null) {
-                        update(mData);
+                        update(mData, mDistanceToEnd);
                     }
                 }
             });
         }
     }
 
-    public void update(List<TrafficSegment> segments) {
+    public void update(List<TrafficSegment> segments, int disToEnd) {
         mData = segments;
+        mTotalDistance = 0.0f;
+        for (TrafficSegment segment : mData) {
+            mTotalDistance += segment.mLength;
+        }
+        mDistanceToEnd = disToEnd;
         if (!mIsAfterLayout) {
             return;
         }
@@ -74,11 +85,6 @@ public class TrafficBarView extends ImageView {
         if (mData == null) {
             return null;
         } else {
-            float totalDistance = 0.0f;
-            for (TrafficSegment segment : mData) {
-                totalDistance += segment.mLength;
-            }
-
             mPaint.setStyle(Paint.Style.FILL);
 
             int width = getWidth();
@@ -109,13 +115,30 @@ public class TrafficBarView extends ImageView {
                 }
                 mPaint.setColor(color);
 
-                float bottom = height * ((totalDistance - drawedDistance) / totalDistance);
+                float bottom = height * ((mTotalDistance - drawedDistance) / mTotalDistance);
                 drawedDistance += segment.mLength;
-                float top = height * ((totalDistance - drawedDistance) / totalDistance);
-                mColorRectF.set(0.0f, top, width, bottom);
+                float top = height * ((mTotalDistance - drawedDistance) / mTotalDistance);
+                mColorRectF.set(0, top, width, bottom);
 
                 canvas.drawRect(mColorRectF, mPaint);
             }
+
+            // drawable passed
+            float top = height * (mDistanceToEnd / mTotalDistance);
+            mColorRectF.set(0, top, width, height);
+            mPaint.setColor(mPassColor);
+            canvas.drawRect(mColorRectF, mPaint);
+
+            // drawable progress loc
+            Bitmap locBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.progress_loc);
+            int locHeight = locBitmap.getHeight();
+            if (top > height - locHeight) {
+                top = height - locHeight;
+            } else {
+                top = Math.max(0, top - (locHeight / 2));
+            }
+            canvas.drawBitmap(locBitmap, (width-locBitmap.getWidth())/2, top, null);
+            locBitmap.recycle();
 
             return fakeCanvas;
         }

@@ -48,12 +48,15 @@ public class TrafficBarViewActivity extends AppCompatActivity {
     private void updateData() {
         List<TrafficBarView.TrafficSegment> trafficSegments = new ArrayList<>();
         Random random = new Random();
+        int totalLength = 0;
         int segCount = random.nextInt(6) + 5;
         for (int i = 0; i < segCount; i++) {
-            TrafficBarView.TrafficSegment segment = new TrafficBarView.TrafficSegment(random.nextInt(100)+1, random.nextInt(5));
+            int segLength = random.nextInt(100) + 1;
+            TrafficBarView.TrafficSegment segment = new TrafficBarView.TrafficSegment(segLength, random.nextInt(5));
             trafficSegments.add(segment);
+            totalLength += segLength;
         }
 
-        mTrafficBar.update(trafficSegments);
+        mTrafficBar.update(trafficSegments, (int)(totalLength*random.nextFloat()));
     }
 }
