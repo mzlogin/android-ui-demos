@@ -143,7 +143,7 @@ public class TrafficBarView extends ImageView {
             // drawable progress loc
             Bitmap locBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.progress_loc);
             int locHeight = locBitmap.getHeight();
-            if (top > height - locHeight) {
+            if (top > height - (locHeight / 2)) {
                 top = height - locHeight;
             } else {
                 top = Math.max(0, top - (locHeight / 2));
