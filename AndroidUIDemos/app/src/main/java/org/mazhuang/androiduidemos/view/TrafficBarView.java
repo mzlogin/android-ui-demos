@@ -81,6 +81,17 @@ public class TrafficBarView extends ImageView {
         }
     }
 
+    public void update(int disToEnd) {
+        mDistanceToEnd = disToEnd;
+        if (!mIsAfterLayout) {
+            return;
+        }
+        Bitmap src = produceFinalBitmap();
+        if (src != null) {
+            setImageBitmap(src);
+        }
+    }
+
     public Bitmap produceFinalBitmap() {
         if (mData == null) {
             return null;
