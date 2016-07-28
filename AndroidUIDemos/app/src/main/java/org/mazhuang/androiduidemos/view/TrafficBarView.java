@@ -26,11 +26,13 @@ public class TrafficBarView extends ImageView {
     private int mBadColor = Color.argb(255, 255, 93, 91);
     private int mVeryBadColor = Color.argb(255, 179, 17, 15);
     private int mPassColor = Color.argb(255, 204, 204, 204);
+    private int mBackgroundColor = Color.argb(255, 255, 255, 255);
     private Paint mPaint;
     private RectF mColorRectF;
     private boolean mIsAfterLayout;
     private float mTotalDistance;
     private int mDistanceToEnd;
+    private int mBorderSize = 6; // in px
 
     public TrafficBarView(Context context) {
         super(context);
@@ -101,9 +103,20 @@ public class TrafficBarView extends ImageView {
             int width = getWidth();
             int height = getHeight();
 
+            if (width <= 4*mBorderSize || height <= 4*mBorderSize) {
+                mBorderSize = 0;
+            }
+
             Bitmap fakeCanvas = Bitmap.createBitmap(width, height,
                     Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(fakeCanvas);
+
+            // draw background
+            mPaint.setColor(mBackgroundColor);
+            mColorRectF.set(0, 0, width, height);
+            canvas.drawRect(mColorRectF, mPaint);
+
+            // draw traffic segments
             float drawedDistance = 0.0f;
             for (TrafficSegment segment : mData) {
                 int color = mNoDateColor;
@@ -126,27 +139,27 @@ public class TrafficBarView extends ImageView {
                 }
                 mPaint.setColor(color);
 
-                float bottom = height * ((mTotalDistance - drawedDistance) / mTotalDistance);
+                float bottom = mBorderSize + (height - mBorderSize*2) * ((mTotalDistance - drawedDistance) / mTotalDistance);
                 drawedDistance += segment.mLength;
-                float top = height * ((mTotalDistance - drawedDistance) / mTotalDistance);
-                mColorRectF.set(0, top, width, bottom);
+                float top = mBorderSize + (height - mBorderSize*2) * ((mTotalDistance - drawedDistance) / mTotalDistance);
+                mColorRectF.set(mBorderSize, top, width-mBorderSize, bottom);
 
                 canvas.drawRect(mColorRectF, mPaint);
             }
 
             // drawable passed
-            float top = height * (mDistanceToEnd / mTotalDistance);
-            mColorRectF.set(0, top, width, height);
+            float top = mBorderSize + (height - mBorderSize*2) * (mDistanceToEnd / mTotalDistance);
+            mColorRectF.set(mBorderSize, top, width-mBorderSize, height-mBorderSize);
             mPaint.setColor(mPassColor);
             canvas.drawRect(mColorRectF, mPaint);
 
             // drawable progress loc
             Bitmap locBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.progress_loc);
             int locHeight = locBitmap.getHeight();
-            if (top > height - (locHeight / 2)) {
-                top = height - locHeight;
+            if (top > height - mBorderSize - (locHeight / 2)) {
+                top = height - mBorderSize - locHeight;
             } else {
-                top = Math.max(0, top - (locHeight / 2));
+                top = Math.max(mBorderSize, top - (locHeight / 2));
             }
             canvas.drawBitmap(locBitmap, (width-locBitmap.getWidth())/2, top, null);
             locBitmap.recycle();
