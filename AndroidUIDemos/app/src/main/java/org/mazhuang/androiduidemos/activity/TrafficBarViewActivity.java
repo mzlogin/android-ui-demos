@@ -23,6 +23,8 @@ public class TrafficBarViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_views);
 
+        setTitle(R.string.traffic_bar_view);
+
         initViews();
 
         mUpdateTrafficCallback = new Runnable() {

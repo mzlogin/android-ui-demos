@@ -19,6 +19,8 @@ public class PieChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pie_chart);
 
+        setTitle(R.string.pie_chart_view);
+
         initViews();
 
         fakeData();

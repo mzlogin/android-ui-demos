@@ -22,7 +22,7 @@ public class PieChartView extends View {
     private int mHeight;
     private float mStartAngle = 0;
     private List<PieData> mData;
-    private int[] mColors = {0xff4c4c4c, 0xffaaaaaa, 0xff2b4180, 0xffd03f2d, 0xffb094d6};
+    private int[] mColors = {0xff2da94f, 0xffcab79c, 0xffb54f51, 0xfff5c86e, 0xff746a81};
     private RectF mRectF;
 
     public PieChartView(Context context) {
