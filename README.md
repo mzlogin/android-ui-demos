@@ -6,8 +6,8 @@ Android UI develop practices
 
 ### TrafficBarView
 
-![TrafficBarView](./assets/traffic-bar-view.png)
+<img src="https://raw.githubusercontent.com/mzlogin/android-ui-demos/master/assets/traffic-bar-view.png" width="400" alt="traffic bar view">
 
 ### PieChartView
 
-![PieChartView](./assets/pie-chart-view.png)
+<img src="https://raw.githubusercontent.com/mzlogin/android-ui-demos/master/assets/pie-chart-view.png" width="400" alt="pie chart view">
