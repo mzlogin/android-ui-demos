@@ -11,9 +11,10 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import org.mazhuang.androiduidemos.R;
-import org.mazhuang.androiduidemos.activity.TrafficBarViewActivity;
 import org.mazhuang.androiduidemos.activity.FragmentUpdateUIActivity;
 import org.mazhuang.androiduidemos.activity.NotificationDemoActivity;
+import org.mazhuang.androiduidemos.activity.PieChartActivity;
+import org.mazhuang.androiduidemos.activity.TrafficBarViewActivity;
 
 /**
  * Created by mazhuang on 4/19.
@@ -35,7 +36,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter implement
                     new ListItem("Test Notifications", NotificationDemoActivity.class)
             },
             {// Show Custom Views
-                    new ListItem("TrafficBarView", TrafficBarViewActivity.class)
+                    new ListItem("TrafficBarView", TrafficBarViewActivity.class),
+                    new ListItem("PieChartView", PieChartActivity.class)
             }
     };
 
