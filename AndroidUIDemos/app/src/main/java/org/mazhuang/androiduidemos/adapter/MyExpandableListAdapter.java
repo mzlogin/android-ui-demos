@@ -14,6 +14,7 @@ import org.mazhuang.androiduidemos.R;
 import org.mazhuang.androiduidemos.activity.FragmentUpdateUIActivity;
 import org.mazhuang.androiduidemos.activity.NotificationDemoActivity;
 import org.mazhuang.androiduidemos.activity.PieChartActivity;
+import org.mazhuang.androiduidemos.activity.SkewTestActivity;
 import org.mazhuang.androiduidemos.activity.TrafficBarViewActivity;
 
 /**
@@ -37,7 +38,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter implement
             },
             {// Show Custom Views
                     new ListItem("TrafficBarView", TrafficBarViewActivity.class),
-                    new ListItem("PieChartView", PieChartActivity.class)
+                    new ListItem("PieChartView", PieChartActivity.class),
+                    new ListItem("SkewTestView", SkewTestActivity.class)
             }
     };
 

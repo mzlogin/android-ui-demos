@@ -18,7 +18,8 @@
         <activity android:name=".activity.FragmentUpdateUIActivity" />
         <activity android:name=".activity.NotificationDemoActivity" />
         <activity android:name=".activity.TrafficBarViewActivity" />
-        <activity android:name=".activity.PieChartActivity"></activity>
+        <activity android:name=".activity.PieChartActivity" />
+        <activity android:name=".activity.SkewTestActivity"></activity>
     </application>
 
 </manifest>
