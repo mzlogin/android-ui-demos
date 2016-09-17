@@ -2,7 +2,4 @@
     <string name="app_name">AndroidUIDemos</string>
     <string name="simple_notification">Simple Notification</string>
     <string name="custom_layout_notification">Custom Layout Notification</string>
-
-    <string name="traffic_bar_view">TrafficBarView</string>
-    <string name="pie_chart_view">PieChartView</string>
 </resources>

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class TrafficBarViewActivity extends AppCompatActivity {
+public class TrafficBarViewActivity extends BaseActivity {
 
     private TrafficBarView mTrafficBar;
     private Handler mHandler = new Handler();
@@ -22,8 +22,6 @@ public class TrafficBarViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_views);
-
-        setTitle(R.string.traffic_bar_view);
 
         initViews();
 

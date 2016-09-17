@@ -19,7 +19,8 @@
         <activity android:name=".activity.NotificationDemoActivity" />
         <activity android:name=".activity.TrafficBarViewActivity" />
         <activity android:name=".activity.PieChartActivity" />
-        <activity android:name=".activity.SkewTestActivity"></activity>
+        <activity android:name=".activity.SkewTestActivity" />
+        <activity android:name=".activity.BaseActivity"></activity>
     </application>
 
 </manifest>

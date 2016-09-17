@@ -16,7 +16,7 @@ import android.widget.RemoteViews;
 import org.mazhuang.androiduidemos.MainActivity;
 import org.mazhuang.androiduidemos.R;
 
-public class NotificationDemoActivity extends AppCompatActivity implements View.OnClickListener {
+public class NotificationDemoActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int SIMPLE_NOTIFICATION_ID = 0;
     private static final int CUSTOM_LAYOUT_NOTIFICATION_ID = 1;

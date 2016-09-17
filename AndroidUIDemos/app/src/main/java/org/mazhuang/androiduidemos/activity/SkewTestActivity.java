@@ -11,7 +11,7 @@ import android.widget.EditText;
 import org.mazhuang.androiduidemos.R;
 import org.mazhuang.androiduidemos.view.SkewTestView;
 
-public class SkewTestActivity extends AppCompatActivity {
+public class SkewTestActivity extends BaseActivity {
 
     private SkewTestView mSkewTestView;
     private EditText mSkewXEdit;

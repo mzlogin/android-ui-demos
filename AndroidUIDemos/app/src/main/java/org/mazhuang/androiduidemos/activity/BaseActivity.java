@@ -1,15 +1,16 @@
 package org.mazhuang.androiduidemos.activity;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-import org.mazhuang.androiduidemos.R;
+public class BaseActivity extends AppCompatActivity {
 
-public class FragmentUpdateUIActivity extends BaseActivity {
+    protected String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment_update_ui);
+
+        setTitle(TAG);
     }
 }

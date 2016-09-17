@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class PieChartActivity extends AppCompatActivity {
+public class PieChartActivity extends BaseActivity {
 
     private PieChartView mPieChartView;
 
@@ -18,8 +18,6 @@ public class PieChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pie_chart);
-
-        setTitle(R.string.pie_chart_view);
 
         initViews();
 
