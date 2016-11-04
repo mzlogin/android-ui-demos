@@ -142,24 +142,8 @@ public class TrafficBarView extends ImageView {
         // draw traffic segments
         float drawedDistance = 0.0f;
         for (TrafficSegment segment : mData) {
-            int color = mNoDateColor;
-            switch (segment.mTrafficLevel) {
-                case TrafficSegment.TRAFFIC_LEVEL_NO_DATA:
-                    color = mNoDateColor;
-                    break;
-                case TrafficSegment.TRAFFIC_LEVEL_GOOD:
-                    color = mGoodColor;
-                    break;
-                case TrafficSegment.TRAFFIC_LEVEL_OKAY:
-                    color = mOkayColor;
-                    break;
-                case TrafficSegment.TRAFFIC_LEVEL_BAD:
-                    color = mBadColor;
-                    break;
-                case TrafficSegment.S_TRAFFIC_LEVEL_VERY_BAD:
-                    color = mVeryBadColor;
-                    break;
-            }
+            int color = getColorByLevel(segment.mTrafficLevel);
+
             mPaint.setColor(color);
 
             float left = mBorderSize + (width - mBorderSize * 2) * (drawedDistance / mTotalDistance);
@@ -212,24 +196,8 @@ public class TrafficBarView extends ImageView {
         // draw traffic segments
         float drawedDistance = 0.0f;
         for (TrafficSegment segment : mData) {
-            int color = mNoDateColor;
-            switch (segment.mTrafficLevel) {
-                case TrafficSegment.TRAFFIC_LEVEL_NO_DATA:
-                    color = mNoDateColor;
-                    break;
-                case TrafficSegment.TRAFFIC_LEVEL_GOOD:
-                    color = mGoodColor;
-                    break;
-                case TrafficSegment.TRAFFIC_LEVEL_OKAY:
-                    color = mOkayColor;
-                    break;
-                case TrafficSegment.TRAFFIC_LEVEL_BAD:
-                    color = mBadColor;
-                    break;
-                case TrafficSegment.S_TRAFFIC_LEVEL_VERY_BAD:
-                    color = mVeryBadColor;
-                    break;
-            }
+            int color = getColorByLevel(segment.mTrafficLevel);
+
             mPaint.setColor(color);
 
             float bottom = mBorderSize + (height - mBorderSize * 2) * ((mTotalDistance - drawedDistance) / mTotalDistance);
@@ -258,6 +226,28 @@ public class TrafficBarView extends ImageView {
         locBitmap.recycle();
 
         return fakeCanvas;
+    }
+
+    private int getColorByLevel(int level) {
+        int color = mNoDateColor;
+        switch (level) {
+            case TrafficSegment.TRAFFIC_LEVEL_NO_DATA:
+                color = mNoDateColor;
+                break;
+            case TrafficSegment.TRAFFIC_LEVEL_GOOD:
+                color = mGoodColor;
+                break;
+            case TrafficSegment.TRAFFIC_LEVEL_OKAY:
+                color = mOkayColor;
+                break;
+            case TrafficSegment.TRAFFIC_LEVEL_BAD:
+                color = mBadColor;
+                break;
+            case TrafficSegment.S_TRAFFIC_LEVEL_VERY_BAD:
+                color = mVeryBadColor;
+                break;
+        }
+        return color;
     }
 
     public static class TrafficSegment {
