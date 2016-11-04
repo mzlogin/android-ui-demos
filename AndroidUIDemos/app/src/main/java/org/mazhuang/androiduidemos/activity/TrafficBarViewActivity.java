@@ -1,7 +1,6 @@
 package org.mazhuang.androiduidemos.activity;
 
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import org.mazhuang.androiduidemos.R;
@@ -14,6 +13,7 @@ import java.util.Random;
 public class TrafficBarViewActivity extends BaseActivity {
 
     private TrafficBarView mTrafficBar;
+    private TrafficBarView mHorizontalTrafficBar;
     private Handler mHandler = new Handler();
     private long mRefreshInterval = 3000;
     private Runnable mUpdateTrafficCallback;
@@ -21,7 +21,7 @@ public class TrafficBarViewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_views);
+        setContentView(R.layout.activity_traffic_bar_view);
 
         initViews();
 
@@ -43,6 +43,7 @@ public class TrafficBarViewActivity extends BaseActivity {
 
     private void initViews() {
         mTrafficBar = (TrafficBarView) findViewById(R.id.traffic);
+        mHorizontalTrafficBar = (TrafficBarView) findViewById(R.id.traffic_horizontal);
     }
 
     private void updateData() {
@@ -57,6 +58,8 @@ public class TrafficBarViewActivity extends BaseActivity {
             totalLength += segLength;
         }
 
-        mTrafficBar.update(trafficSegments, (int)(totalLength*random.nextFloat()));
+        int disToEnd = (int)(totalLength*random.nextFloat());
+        mTrafficBar.update(trafficSegments, disToEnd);
+        mHorizontalTrafficBar.update(trafficSegments, disToEnd);
     }
 }

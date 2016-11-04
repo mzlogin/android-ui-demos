@@ -1,6 +1,7 @@
 package org.mazhuang.androiduidemos.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import org.mazhuang.androiduidemos.R;
 
@@ -34,19 +36,20 @@ public class TrafficBarView extends ImageView {
     private float mTotalDistance;
     private int mDistanceToEnd;
     private int mBorderSize = 6; // in px
+    private int mOrientation;
 
     public TrafficBarView(Context context) {
-        super(context);
-        init();
+        this(context, null);
     }
 
     public TrafficBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
-    }
 
-    public TrafficBarView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TrafficBarView);
+        mOrientation = ta.getInt(R.styleable.TrafficBarView_android_orientation, LinearLayout.VERTICAL);
+
+        ta.recycle();
+
         init();
     }
 
@@ -67,6 +70,13 @@ public class TrafficBarView extends ImageView {
                     }
                 }
             });
+        }
+    }
+
+    public void serOrientation(int orientation) {
+        if (mOrientation != orientation) {
+            mOrientation = orientation;
+            update(mDistanceToEnd);
         }
     }
 
@@ -100,75 +110,154 @@ public class TrafficBarView extends ImageView {
     public Bitmap produceFinalBitmap() {
         if (mData == null) {
             return null;
-        } else {
-            mPaint.setStyle(Paint.Style.FILL);
-
-            int width = getWidth();
-            int height = getHeight();
-
-            if (width <= 4*mBorderSize || height <= 4*mBorderSize) {
-                mBorderSize = 0;
-            }
-
-            Bitmap fakeCanvas = Bitmap.createBitmap(width, height,
-                    Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(fakeCanvas);
-
-            // draw background
-            mPaint.setColor(mBackgroundColor);
-            mColorRectF.set(0, 0, width, height);
-            canvas.drawRect(mColorRectF, mPaint);
-
-            // draw traffic segments
-            float drawedDistance = 0.0f;
-            for (TrafficSegment segment : mData) {
-                int color = mNoDateColor;
-                switch (segment.mTrafficLevel) {
-                    case TrafficSegment.TRAFFIC_LEVEL_NO_DATA:
-                        color = mNoDateColor;
-                        break;
-                    case TrafficSegment.TRAFFIC_LEVEL_GOOD:
-                        color = mGoodColor;
-                        break;
-                    case TrafficSegment.TRAFFIC_LEVEL_OKAY:
-                        color = mOkayColor;
-                        break;
-                    case TrafficSegment.TRAFFIC_LEVEL_BAD:
-                        color = mBadColor;
-                        break;
-                    case TrafficSegment.S_TRAFFIC_LEVEL_VERY_BAD:
-                        color = mVeryBadColor;
-                        break;
-                }
-                mPaint.setColor(color);
-
-                float bottom = mBorderSize + (height - mBorderSize*2) * ((mTotalDistance - drawedDistance) / mTotalDistance);
-                drawedDistance += segment.mLength;
-                float top = mBorderSize + (height - mBorderSize*2) * ((mTotalDistance - drawedDistance) / mTotalDistance);
-                mColorRectF.set(mBorderSize, top, width-mBorderSize, bottom);
-
-                canvas.drawRect(mColorRectF, mPaint);
-            }
-
-            // drawable passed
-            float top = mBorderSize + (height - mBorderSize*2) * (mDistanceToEnd / mTotalDistance);
-            mColorRectF.set(mBorderSize, top, width-mBorderSize, height-mBorderSize);
-            mPaint.setColor(mPassColor);
-            canvas.drawRect(mColorRectF, mPaint);
-
-            // drawable progress loc
-            Bitmap locBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.progress_loc);
-            int locHeight = locBitmap.getHeight();
-            if (top > height - mBorderSize - (locHeight / 2)) {
-                top = height - mBorderSize - locHeight;
-            } else {
-                top = Math.max(mBorderSize, top - (locHeight / 2));
-            }
-            canvas.drawBitmap(locBitmap, (width-locBitmap.getWidth())/2, top, null);
-            locBitmap.recycle();
-
-            return fakeCanvas;
         }
+
+        if (mOrientation == LinearLayout.HORIZONTAL) {
+            return produceHorizontalBitmap();
+        } else {
+            return produceVerticalBitmap();
+        }
+    }
+
+    public Bitmap produceHorizontalBitmap() {
+
+        mPaint.setStyle(Paint.Style.FILL);
+
+        int width = getWidth();
+        int height = getHeight();
+
+        if (width <= 4 * mBorderSize || height <= 4 * mBorderSize) {
+            mBorderSize = 0;
+        }
+
+        Bitmap fakeCanvas = Bitmap.createBitmap(width, height,
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(fakeCanvas);
+
+        // draw background
+        mPaint.setColor(mBackgroundColor);
+        mColorRectF.set(0, 0, width, height);
+        canvas.drawRect(mColorRectF, mPaint);
+
+        // draw traffic segments
+        float drawedDistance = 0.0f;
+        for (TrafficSegment segment : mData) {
+            int color = mNoDateColor;
+            switch (segment.mTrafficLevel) {
+                case TrafficSegment.TRAFFIC_LEVEL_NO_DATA:
+                    color = mNoDateColor;
+                    break;
+                case TrafficSegment.TRAFFIC_LEVEL_GOOD:
+                    color = mGoodColor;
+                    break;
+                case TrafficSegment.TRAFFIC_LEVEL_OKAY:
+                    color = mOkayColor;
+                    break;
+                case TrafficSegment.TRAFFIC_LEVEL_BAD:
+                    color = mBadColor;
+                    break;
+                case TrafficSegment.S_TRAFFIC_LEVEL_VERY_BAD:
+                    color = mVeryBadColor;
+                    break;
+            }
+            mPaint.setColor(color);
+
+            float left = mBorderSize + (width - mBorderSize * 2) * (drawedDistance / mTotalDistance);
+            drawedDistance += segment.mLength;
+            float right = mBorderSize + (width - mBorderSize * 2) * (drawedDistance / mTotalDistance);
+            mColorRectF.set(left, mBorderSize, right, height - mBorderSize);
+
+            canvas.drawRect(mColorRectF, mPaint);
+        }
+
+        // drawable passed
+        float right = mBorderSize + (width - mBorderSize * 2) * ((mTotalDistance - mDistanceToEnd) / mTotalDistance);
+        mColorRectF.set(mBorderSize, mBorderSize, right, height - mBorderSize);
+        mPaint.setColor(mPassColor);
+        canvas.drawRect(mColorRectF, mPaint);
+
+        // drawable progress loc
+        Bitmap locBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.progress_loc);
+        int locWidth = locBitmap.getWidth();
+        if (right < mBorderSize + (locWidth / 2)) {
+            right = mBorderSize + locWidth;
+        } else {
+            right = Math.min(width - mBorderSize, right + (locWidth / 2));
+        }
+        canvas.drawBitmap(locBitmap, right - locWidth, (height - locBitmap.getHeight()) / 2, null);
+        locBitmap.recycle();
+
+        return fakeCanvas;
+    }
+
+    public Bitmap produceVerticalBitmap() {
+        mPaint.setStyle(Paint.Style.FILL);
+
+        int width = getWidth();
+        int height = getHeight();
+
+        if (width <= 4 * mBorderSize || height <= 4 * mBorderSize) {
+            mBorderSize = 0;
+        }
+
+        Bitmap fakeCanvas = Bitmap.createBitmap(width, height,
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(fakeCanvas);
+
+        // draw background
+        mPaint.setColor(mBackgroundColor);
+        mColorRectF.set(0, 0, width, height);
+        canvas.drawRect(mColorRectF, mPaint);
+
+        // draw traffic segments
+        float drawedDistance = 0.0f;
+        for (TrafficSegment segment : mData) {
+            int color = mNoDateColor;
+            switch (segment.mTrafficLevel) {
+                case TrafficSegment.TRAFFIC_LEVEL_NO_DATA:
+                    color = mNoDateColor;
+                    break;
+                case TrafficSegment.TRAFFIC_LEVEL_GOOD:
+                    color = mGoodColor;
+                    break;
+                case TrafficSegment.TRAFFIC_LEVEL_OKAY:
+                    color = mOkayColor;
+                    break;
+                case TrafficSegment.TRAFFIC_LEVEL_BAD:
+                    color = mBadColor;
+                    break;
+                case TrafficSegment.S_TRAFFIC_LEVEL_VERY_BAD:
+                    color = mVeryBadColor;
+                    break;
+            }
+            mPaint.setColor(color);
+
+            float bottom = mBorderSize + (height - mBorderSize * 2) * ((mTotalDistance - drawedDistance) / mTotalDistance);
+            drawedDistance += segment.mLength;
+            float top = mBorderSize + (height - mBorderSize * 2) * ((mTotalDistance - drawedDistance) / mTotalDistance);
+            mColorRectF.set(mBorderSize, top, width - mBorderSize, bottom);
+
+            canvas.drawRect(mColorRectF, mPaint);
+        }
+
+        // drawable passed
+        float top = mBorderSize + (height - mBorderSize * 2) * (mDistanceToEnd / mTotalDistance);
+        mColorRectF.set(mBorderSize, top, width - mBorderSize, height - mBorderSize);
+        mPaint.setColor(mPassColor);
+        canvas.drawRect(mColorRectF, mPaint);
+
+        // drawable progress loc
+        Bitmap locBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.progress_loc);
+        int locHeight = locBitmap.getHeight();
+        if (top > height - mBorderSize - (locHeight / 2)) {
+            top = height - mBorderSize - locHeight;
+        } else {
+            top = Math.max(mBorderSize, top - (locHeight / 2));
+        }
+        canvas.drawBitmap(locBitmap, (width - locBitmap.getWidth()) / 2, top, null);
+        locBitmap.recycle();
+
+        return fakeCanvas;
     }
 
     public static class TrafficSegment {
