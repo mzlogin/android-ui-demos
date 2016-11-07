@@ -2,5 +2,7 @@
 <resources>
     <declare-styleable name="TrafficBarView">
         <attr name="android:orientation" />
+        <attr name="borderSize" format="dimension" />
+        <attr name="borderColor" format="color" />
     </declare-styleable>
 </resources>

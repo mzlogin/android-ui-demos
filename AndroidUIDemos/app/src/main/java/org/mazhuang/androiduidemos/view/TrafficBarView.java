@@ -22,6 +22,13 @@ import java.util.List;
  * Created by mazhuang on 2016/7/17.
  */
 public class TrafficBarView extends ImageView {
+
+    // custom properties
+    private int mBorderSize; // in px
+    private int mOrientation;
+    private int mBorderColor;
+    // ===
+
     private List<TrafficSegment> mData;
     private int mNoDateColor = Color.argb(255, 26, 166, 239);
     private int mGoodColor = Color.parseColor("#05C300");
@@ -29,14 +36,12 @@ public class TrafficBarView extends ImageView {
     private int mBadColor = Color.argb(255, 255, 93, 91);
     private int mVeryBadColor = Color.argb(255, 179, 17, 15);
     private int mPassColor = Color.argb(255, 204, 204, 204);
-    private int mBackgroundColor = Color.argb(255, 255, 255, 255);
+
     private Paint mPaint;
     private RectF mColorRectF;
     private boolean mIsAfterLayout;
     private float mTotalDistance;
     private int mDistanceToEnd;
-    private int mBorderSize = 6; // in px
-    private int mOrientation;
 
     public TrafficBarView(Context context) {
         this(context, null);
@@ -47,6 +52,8 @@ public class TrafficBarView extends ImageView {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TrafficBarView);
         mOrientation = ta.getInt(R.styleable.TrafficBarView_android_orientation, LinearLayout.VERTICAL);
+        mBorderSize = ta.getDimensionPixelSize(R.styleable.TrafficBarView_borderSize, 0);
+        mBorderColor = ta.getColor(R.styleable.TrafficBarView_borderColor, Color.WHITE);
 
         ta.recycle();
 
@@ -135,7 +142,7 @@ public class TrafficBarView extends ImageView {
         Canvas canvas = new Canvas(fakeCanvas);
 
         // draw background
-        mPaint.setColor(mBackgroundColor);
+        mPaint.setColor(mBorderColor);
         mColorRectF.set(0, 0, width, height);
         canvas.drawRect(mColorRectF, mPaint);
 
@@ -189,7 +196,7 @@ public class TrafficBarView extends ImageView {
         Canvas canvas = new Canvas(fakeCanvas);
 
         // draw background
-        mPaint.setColor(mBackgroundColor);
+        mPaint.setColor(mBorderColor);
         mColorRectF.set(0, 0, width, height);
         canvas.drawRect(mColorRectF, mPaint);
 
