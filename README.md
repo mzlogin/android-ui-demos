@@ -9,7 +9,7 @@ Android UI develop practices
     * [TrafficBarView](#trafficbarview)
     * [PieChartView](#piechartview)
 * [Test Tools](#test-tools)
-    * [ScaleTypeTest](#scaletypetest)
+    * [ScaleType Test](#scaletype-test)
     * [Skew Test](#skew-test)
 
 <!-- vim-markdown-toc -->
@@ -26,7 +26,7 @@ Android UI develop practices
 
 ## Test Tools
 
-### ScaleTypeTest
+### ScaleType Test
 
 <img src="https://raw.githubusercontent.com/mzlogin/android-ui-demos/master/assets/scale-type-test.png" width="300" alt="scale type test">
 
