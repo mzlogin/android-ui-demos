@@ -20,7 +20,8 @@
         <activity android:name=".activity.TrafficBarViewActivity" />
         <activity android:name=".activity.PieChartActivity" />
         <activity android:name=".activity.SkewTestActivity" />
-        <activity android:name=".activity.BaseActivity"></activity>
+        <activity android:name=".activity.ScaleTypeTestActivity" />
+        <activity android:name=".activity.BaseActivity" />
     </application>
 
 </manifest>

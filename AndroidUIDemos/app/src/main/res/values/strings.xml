@@ -2,4 +2,15 @@
     <string name="app_name">AndroidUIDemos</string>
     <string name="simple_notification">Simple Notification</string>
     <string name="custom_layout_notification">Custom Layout Notification</string>
+
+    <string-array name="scale_type">
+        <item>matrix</item>
+        <item>fitXY</item>
+        <item>fitStart</item>
+        <item>fitCenter</item>
+        <item>fitEnd</item>
+        <item>center</item>
+        <item>centerCrop</item>
+        <item>centerInside</item>
+    </string-array>
 </resources>
