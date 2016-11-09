@@ -10,24 +10,30 @@
 
     <org.mazhuang.androiduidemos.view.TrafficBarView
         android:id="@+id/traffic"
-        android:layout_width="30dp"
+        android:layout_width="50dp"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
         android:scaleType="fitXY"
-        app:borderSize="2dp"
-        app:borderColor="@android:color/holo_blue_bright"/>
+        app:borderSize="0dp"
+        app:borderColor="@android:color/holo_blue_bright"
+        app:indicator="@drawable/progress_loc_vertical"
+        app:indicatorExtrude="10dp"
+        app:indicatorBgClear="true"/>
 
     <org.mazhuang.androiduidemos.view.TrafficBarView
         android:id="@+id/traffic_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:layout_margin="20dp"
         android:scaleType="fitXY"
-        app:borderSize="1dp"
-        app:borderColor="@android:color/holo_purple"/>
+        app:borderSize="2dp"
+        app:borderColor="@android:color/white"
+        app:indicator="@drawable/progress_loc_horizontal"
+        app:indicatorExtrude="0dp"
+        app:indicatorBgClear="false"/>
 
 </LinearLayout>

@@ -3,11 +3,15 @@ package org.mazhuang.androiduidemos.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Xfermode;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewTreeObserver;
@@ -27,6 +31,9 @@ public class TrafficBarView extends ImageView {
     private int mBorderSize; // in px
     private int mOrientation;
     private int mBorderColor;
+    private Drawable mIndicatroDrawable;
+    private int mIndicatorExtrudeSize;
+    private boolean mIndicatorBgClear;
     // ===
 
     private List<TrafficSegment> mData;
@@ -51,11 +58,17 @@ public class TrafficBarView extends ImageView {
         super(context, attrs);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TrafficBarView);
-        mOrientation = ta.getInt(R.styleable.TrafficBarView_android_orientation, LinearLayout.VERTICAL);
-        mBorderSize = ta.getDimensionPixelSize(R.styleable.TrafficBarView_borderSize, 0);
-        mBorderColor = ta.getColor(R.styleable.TrafficBarView_borderColor, Color.WHITE);
+        try {
+            mOrientation = ta.getInt(R.styleable.TrafficBarView_android_orientation, LinearLayout.VERTICAL);
+            mBorderSize = ta.getDimensionPixelSize(R.styleable.TrafficBarView_borderSize, 0);
+            mBorderColor = ta.getColor(R.styleable.TrafficBarView_borderColor, Color.WHITE);
+            mIndicatroDrawable = ta.getDrawable(R.styleable.TrafficBarView_indicator);
+            mIndicatorExtrudeSize = ta.getDimensionPixelSize(R.styleable.TrafficBarView_indicatorExtrude, 0);
+            mIndicatorBgClear = ta.getBoolean(R.styleable.TrafficBarView_indicatorBgClear, false);
+        } finally {
+            ta.recycle();
+        }
 
-        ta.recycle();
 
         init();
     }
@@ -133,7 +146,11 @@ public class TrafficBarView extends ImageView {
         int width = getWidth();
         int height = getHeight();
 
-        if (width <= 4 * mBorderSize || height <= 4 * mBorderSize) {
+        if (mIndicatorExtrudeSize > height) {
+            mIndicatorExtrudeSize = 0;
+        }
+
+        if (width <= 4 * mBorderSize || height <= 4 * mBorderSize || mIndicatorExtrudeSize != 0) {
             mBorderSize = 0;
         }
 
@@ -143,7 +160,7 @@ public class TrafficBarView extends ImageView {
 
         // draw background
         mPaint.setColor(mBorderColor);
-        mColorRectF.set(0, 0, width, height);
+        mColorRectF.set(0, mIndicatorExtrudeSize, width, height);
         canvas.drawRect(mColorRectF, mPaint);
 
         // draw traffic segments
@@ -156,27 +173,39 @@ public class TrafficBarView extends ImageView {
             float left = mBorderSize + (width - mBorderSize * 2) * (drawedDistance / mTotalDistance);
             drawedDistance += segment.mLength;
             float right = mBorderSize + (width - mBorderSize * 2) * (drawedDistance / mTotalDistance);
-            mColorRectF.set(left, mBorderSize, right, height - mBorderSize);
+            mColorRectF.set(left, mBorderSize + mIndicatorExtrudeSize, right, height - mBorderSize);
 
             canvas.drawRect(mColorRectF, mPaint);
         }
 
         // drawable passed
         float right = mBorderSize + (width - mBorderSize * 2) * ((mTotalDistance - mDistanceToEnd) / mTotalDistance);
-        mColorRectF.set(mBorderSize, mBorderSize, right, height - mBorderSize);
+        mColorRectF.set(mBorderSize, mBorderSize + mIndicatorExtrudeSize, right, height - mBorderSize);
         mPaint.setColor(mPassColor);
         canvas.drawRect(mColorRectF, mPaint);
 
         // drawable progress loc
-        Bitmap locBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.progress_loc);
-        int locWidth = locBitmap.getWidth();
-        if (right < mBorderSize + (locWidth / 2)) {
-            right = mBorderSize + locWidth;
-        } else {
-            right = Math.min(width - mBorderSize, right + (locWidth / 2));
+        if (mIndicatroDrawable != null) {
+            int locWidth = mIndicatroDrawable.getIntrinsicWidth();
+            if (right < mBorderSize + (locWidth / 2)) {
+                right = mBorderSize + locWidth;
+            } else {
+                right = Math.min(width - mBorderSize, right + (locWidth / 2));
+            }
+
+            Rect bound = new Rect(Math.round(right - locWidth), mBorderSize, Math.round(right), height - mBorderSize);
+
+            if (mIndicatorBgClear) {
+                Xfermode oldXferMode = mPaint.getXfermode();
+                mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+                mPaint.setColor(Color.TRANSPARENT);
+                canvas.drawRect(bound, mPaint);
+                mPaint.setXfermode(oldXferMode);
+            }
+
+            mIndicatroDrawable.setBounds(bound);
+            mIndicatroDrawable.draw(canvas);
         }
-        canvas.drawBitmap(locBitmap, right - locWidth, (height - locBitmap.getHeight()) / 2, null);
-        locBitmap.recycle();
 
         return fakeCanvas;
     }
@@ -187,7 +216,12 @@ public class TrafficBarView extends ImageView {
         int width = getWidth();
         int height = getHeight();
 
-        if (width <= 4 * mBorderSize || height <= 4 * mBorderSize) {
+
+        if (mIndicatorExtrudeSize > width) {
+            mIndicatorExtrudeSize = 0;
+        }
+
+        if (width <= 4 * mBorderSize || height <= 4 * mBorderSize || mIndicatorExtrudeSize != 0) {
             mBorderSize = 0;
         }
 
@@ -197,7 +231,7 @@ public class TrafficBarView extends ImageView {
 
         // draw background
         mPaint.setColor(mBorderColor);
-        mColorRectF.set(0, 0, width, height);
+        mColorRectF.set(mIndicatorExtrudeSize, 0, width, height);
         canvas.drawRect(mColorRectF, mPaint);
 
         // draw traffic segments
@@ -210,27 +244,39 @@ public class TrafficBarView extends ImageView {
             float bottom = mBorderSize + (height - mBorderSize * 2) * ((mTotalDistance - drawedDistance) / mTotalDistance);
             drawedDistance += segment.mLength;
             float top = mBorderSize + (height - mBorderSize * 2) * ((mTotalDistance - drawedDistance) / mTotalDistance);
-            mColorRectF.set(mBorderSize, top, width - mBorderSize, bottom);
+            mColorRectF.set(mBorderSize + mIndicatorExtrudeSize, top, width - mBorderSize, bottom);
 
             canvas.drawRect(mColorRectF, mPaint);
         }
 
         // drawable passed
         float top = mBorderSize + (height - mBorderSize * 2) * (mDistanceToEnd / mTotalDistance);
-        mColorRectF.set(mBorderSize, top, width - mBorderSize, height - mBorderSize);
+        mColorRectF.set(mBorderSize + mIndicatorExtrudeSize, top, width - mBorderSize, height - mBorderSize);
         mPaint.setColor(mPassColor);
         canvas.drawRect(mColorRectF, mPaint);
 
         // drawable progress loc
-        Bitmap locBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.progress_loc);
-        int locHeight = locBitmap.getHeight();
-        if (top > height - mBorderSize - (locHeight / 2)) {
-            top = height - mBorderSize - locHeight;
-        } else {
-            top = Math.max(mBorderSize, top - (locHeight / 2));
+        if (mIndicatroDrawable != null) {
+            int locHeight = mIndicatroDrawable.getIntrinsicHeight();
+            if (top > height - mBorderSize - (locHeight / 2)) {
+                top = height - mBorderSize - locHeight;
+            } else {
+                top = Math.max(mBorderSize, top - (locHeight / 2));
+            }
+
+            Rect bound = new Rect(mBorderSize, Math.round(top), width - mBorderSize, Math.round(top + locHeight));
+
+            if (mIndicatorBgClear) {
+                Xfermode oldXferMode = mPaint.getXfermode();
+                mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+                mPaint.setColor(Color.TRANSPARENT);
+                canvas.drawRect(bound, mPaint);
+                mPaint.setXfermode(oldXferMode);
+            }
+
+            mIndicatroDrawable.setBounds(bound);
+            mIndicatroDrawable.draw(canvas);
         }
-        canvas.drawBitmap(locBitmap, (width - locBitmap.getWidth()) / 2, top, null);
-        locBitmap.recycle();
 
         return fakeCanvas;
     }

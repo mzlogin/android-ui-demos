@@ -4,5 +4,8 @@
         <attr name="android:orientation" />
         <attr name="borderSize" format="dimension" />
         <attr name="borderColor" format="color" />
+        <attr name="indicator" format="integer" />
+        <attr name="indicatorExtrude" format="dimension" />
+        <attr name="indicatorBgClear" format="boolean" />
     </declare-styleable>
 </resources>
