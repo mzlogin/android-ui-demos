@@ -7,5 +7,6 @@
         <attr name="indicator" format="integer" />
         <attr name="indicatorExtrude" format="dimension" />
         <attr name="indicatorBgClear" format="boolean" />
+        <attr name="colors" format="reference" />
     </declare-styleable>
 </resources>

@@ -1,6 +1,7 @@
 package org.mazhuang.androiduidemos.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -37,12 +38,12 @@ public class TrafficBarView extends ImageView {
     // ===
 
     private List<TrafficSegment> mData;
-    private int mNoDateColor = Color.argb(255, 26, 166, 239);
-    private int mGoodColor = Color.parseColor("#05C300");
-    private int mOkayColor = Color.parseColor("#FFD615");
-    private int mBadColor = Color.argb(255, 255, 93, 91);
-    private int mVeryBadColor = Color.argb(255, 179, 17, 15);
-    private int mPassColor = Color.argb(255, 204, 204, 204);
+    private int mNoDateColor = Color.parseColor("#FF1AA6EF");
+    private int mGoodColor = Color.parseColor("#FF05C300");
+    private int mOkayColor = Color.parseColor("#FFFFD615");
+    private int mBadColor = Color.parseColor("#FFFF5D5B");
+    private int mVeryBadColor = Color.parseColor("#FFB3110F");
+    private int mPassColor = Color.parseColor("#FFCCCCCC");
 
     private Paint mPaint;
     private RectF mColorRectF;
@@ -65,10 +66,25 @@ public class TrafficBarView extends ImageView {
             mIndicatroDrawable = ta.getDrawable(R.styleable.TrafficBarView_indicator);
             mIndicatorExtrudeSize = ta.getDimensionPixelSize(R.styleable.TrafficBarView_indicatorExtrude, 0);
             mIndicatorBgClear = ta.getBoolean(R.styleable.TrafficBarView_indicatorBgClear, false);
+            int colorsId = ta.getResourceId(R.styleable.TrafficBarView_colors, 0);
+            if (colorsId != 0) {
+                try {
+                    int[] colors = getResources().getIntArray(colorsId);
+                    if (colors.length >= 6) {
+                        mNoDateColor = colors[0];
+                        mGoodColor = colors[1];
+                        mOkayColor = colors[2];
+                        mBadColor = colors[3];
+                        mVeryBadColor = colors[4];
+                        mPassColor = colors[5];
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
         } finally {
             ta.recycle();
         }
-
 
         init();
     }

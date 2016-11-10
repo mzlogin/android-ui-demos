@@ -34,6 +34,7 @@
         app:borderColor="@android:color/white"
         app:indicator="@drawable/progress_loc_horizontal"
         app:indicatorExtrude="0dp"
-        app:indicatorBgClear="false"/>
+        app:indicatorBgClear="false"
+        app:colors="@array/traffic_color"/>
 
 </LinearLayout>

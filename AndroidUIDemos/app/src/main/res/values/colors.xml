@@ -4,5 +4,23 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="progress_indicator">#b3ffffff</color>
+    <color name="progress_indicator">#B3FFFFFF</color>
+
+    <!-- TrafficBarView -->
+    <color name="traffic_no_data">#FF1AA6EF</color>
+    <color name="traffic_good">#FF05C300</color>
+    <color name="traffic_okay">#FFFFD615</color>
+    <color name="traffic_bad">#FFFF5D5B</color>
+    <color name="traffic_very_bad">#FFB3110F</color>
+    <color name="traffic_pass">#FFCCCCCC</color>
+
+    <array name="traffic_color">
+        <item>@color/traffic_no_data</item>
+        <item>@color/traffic_good</item>
+        <item>@color/traffic_okay</item>
+        <item>@color/traffic_bad</item>
+        <item>@color/traffic_very_bad</item>
+        <item>@color/traffic_pass</item>
+    </array>
+    <!-- TrafficBarView -->
 </resources>
