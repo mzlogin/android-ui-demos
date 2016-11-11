@@ -13,4 +13,25 @@
         <item>centerCrop</item>
         <item>centerInside</item>
     </string-array>
+
+    <string-array name="xfermode">
+        <item>CLEAR</item>
+        <item>SRC</item>
+        <item>DST</item>
+        <item>SRC_OVER</item>
+        <item>DST_OVER</item>
+        <item>SRC_IN</item>
+        <item>DST_IN</item>
+        <item>SRC_OUT</item>
+        <item>DST_OUT</item>
+        <item>SRC_ATOP</item>
+        <item>DST_ATOP</item>
+        <item>XOR</item>
+        <item>ADD</item>
+        <item>MULTIPLY</item>
+        <item>SCREEN</item>
+        <item>OVERLAY</item>
+        <item>DARKEN</item>
+        <item>LIGHTEN</item>
+    </string-array>
 </resources>

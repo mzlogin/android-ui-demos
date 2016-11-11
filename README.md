@@ -11,6 +11,7 @@ Android UI develop practices
 * [Test Tools](#test-tools)
     * [ScaleType Test](#scaletype-test)
     * [Skew Test](#skew-test)
+    * [Xfermode Test](#xfermode-test)
 
 <!-- vim-markdown-toc -->
 
@@ -33,3 +34,7 @@ Android UI develop practices
 ### Skew Test
 
 <img src="https://raw.githubusercontent.com/mzlogin/android-ui-demos/master/assets/skew-test.png" width="300" alt="skew test">
+
+### Xfermode Test
+
+<img src="https://raw.githubusercontent.com/mzlogin/android-ui-demos/master/assets/xfermode-test.png" width="300" alt="xfermode test">

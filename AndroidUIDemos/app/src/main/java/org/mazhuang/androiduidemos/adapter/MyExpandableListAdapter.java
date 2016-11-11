@@ -17,6 +17,7 @@ import org.mazhuang.androiduidemos.activity.PieChartActivity;
 import org.mazhuang.androiduidemos.activity.ScaleTypeTestActivity;
 import org.mazhuang.androiduidemos.activity.SkewTestActivity;
 import org.mazhuang.androiduidemos.activity.TrafficBarViewActivity;
+import org.mazhuang.androiduidemos.activity.XfermodeTestActivity;
 
 /**
  * Created by mazhuang on 4/19.
@@ -44,7 +45,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter implement
                     new ListItem("SkewTestView", SkewTestActivity.class)
             },
             {
-                    new ListItem("scaleTypeTest", ScaleTypeTestActivity.class)
+                    new ListItem("scaleTypeTest", ScaleTypeTestActivity.class),
+                    new ListItem("XferModeTest", XfermodeTestActivity.class)
             }
     };
 
