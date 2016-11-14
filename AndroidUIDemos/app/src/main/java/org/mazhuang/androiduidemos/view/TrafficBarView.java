@@ -194,11 +194,15 @@ public class TrafficBarView extends ImageView {
             canvas.drawRect(mColorRectF, mPaint);
         }
 
+        Xfermode oldXferMode = mPaint.getXfermode();
+
         // drawable passed
         float right = mBorderSize + (width - mBorderSize * 2) * ((mTotalDistance - mDistanceToEnd) / mTotalDistance);
         mColorRectF.set(mBorderSize, mBorderSize + mIndicatorExtrudeSize, right, height - mBorderSize);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
         mPaint.setColor(mPassColor);
         canvas.drawRect(mColorRectF, mPaint);
+        mPaint.setXfermode(oldXferMode);
 
         // drawable progress loc
         if (mIndicatroDrawable != null) {
@@ -212,7 +216,6 @@ public class TrafficBarView extends ImageView {
             Rect bound = new Rect(Math.round(right - locWidth), mBorderSize, Math.round(right), height - mBorderSize);
 
             if (mIndicatorBgClear) {
-                Xfermode oldXferMode = mPaint.getXfermode();
                 mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
                 mPaint.setColor(Color.TRANSPARENT);
                 canvas.drawRect(bound, mPaint);
@@ -265,11 +268,15 @@ public class TrafficBarView extends ImageView {
             canvas.drawRect(mColorRectF, mPaint);
         }
 
+        Xfermode oldXferMode = mPaint.getXfermode();
+
         // drawable passed
         float top = mBorderSize + (height - mBorderSize * 2) * (mDistanceToEnd / mTotalDistance);
         mColorRectF.set(mBorderSize + mIndicatorExtrudeSize, top, width - mBorderSize, height - mBorderSize);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
         mPaint.setColor(mPassColor);
         canvas.drawRect(mColorRectF, mPaint);
+        mPaint.setXfermode(oldXferMode);
 
         // drawable progress loc
         if (mIndicatroDrawable != null) {
@@ -283,7 +290,6 @@ public class TrafficBarView extends ImageView {
             Rect bound = new Rect(mBorderSize, Math.round(top), width - mBorderSize, Math.round(top + locHeight));
 
             if (mIndicatorBgClear) {
-                Xfermode oldXferMode = mPaint.getXfermode();
                 mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
                 mPaint.setColor(Color.TRANSPARENT);
                 canvas.drawRect(bound, mPaint);

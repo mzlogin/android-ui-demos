@@ -12,7 +12,7 @@
     <color name="traffic_okay">#FFFFD615</color>
     <color name="traffic_bad">#FFFF5D5B</color>
     <color name="traffic_very_bad">#FFB3110F</color>
-    <color name="traffic_pass">#FFCCCCCC</color>
+    <color name="traffic_pass">#CCCCCCCC</color>
 
     <array name="traffic_color">
         <item>@color/traffic_no_data</item>
