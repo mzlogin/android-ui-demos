@@ -11,6 +11,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import org.mazhuang.androiduidemos.R;
+import org.mazhuang.androiduidemos.activity.ContraintLayoutTestActivity;
 import org.mazhuang.androiduidemos.activity.FragmentUpdateUIActivity;
 import org.mazhuang.androiduidemos.activity.NotificationDemoActivity;
 import org.mazhuang.androiduidemos.activity.PieChartActivity;
@@ -46,7 +47,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter implement
             },
             {
                     new ListItem("scaleTypeTest", ScaleTypeTestActivity.class),
-                    new ListItem("XferModeTest", XfermodeTestActivity.class)
+                    new ListItem("XferModeTest", XfermodeTestActivity.class),
+                    new ListItem("ContraintLayout Test", ContraintLayoutTestActivity.class)
             }
     };
 

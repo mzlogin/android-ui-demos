@@ -22,7 +22,8 @@
         <activity android:name=".activity.SkewTestActivity" />
         <activity android:name=".activity.ScaleTypeTestActivity" />
         <activity android:name=".activity.BaseActivity" />
-        <activity android:name=".activity.XfermodeTestActivity"></activity>
+        <activity android:name=".activity.XfermodeTestActivity" />
+        <activity android:name=".activity.ContraintLayoutTestActivity"></activity>
     </application>
 
 </manifest>

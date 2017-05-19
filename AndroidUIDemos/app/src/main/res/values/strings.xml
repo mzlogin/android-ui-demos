@@ -2,6 +2,9 @@
     <string name="app_name">AndroidUIDemos</string>
     <string name="simple_notification">Simple Notification</string>
     <string name="custom_layout_notification">Custom Layout Notification</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">登录</string>
 
     <string-array name="scale_type">
         <item>matrix</item>
