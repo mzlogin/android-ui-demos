@@ -10,11 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import org.mazhuang.androiduidemos.R;
-import org.mazhuang.androiduidemos.view.XfermodeTestView;
+import org.mazhuang.androiduidemos.view.XferModeTestView;
 
-public class XfermodeTestActivity extends BaseActivity {
+public class XferModeTestActivity extends BaseActivity {
 
-    private XfermodeTestView mXfermodeTestView;
+    private XferModeTestView mXfermodeTestView;
     private Spinner mXfermodeSpinner;
 
     @Override
@@ -26,7 +26,7 @@ public class XfermodeTestActivity extends BaseActivity {
     }
 
     private void initViews() {
-        mXfermodeTestView = (XfermodeTestView) findViewById(R.id.test);
+        mXfermodeTestView = (XferModeTestView) findViewById(R.id.test);
         mXfermodeSpinner = (Spinner) findViewById(R.id.options);
 
         final SparseArray<PorterDuff.Mode> modes = new SparseArray<>();

@@ -13,17 +13,17 @@ import static android.graphics.Canvas.ALL_SAVE_FLAG;
  * Created by mazhuang on 2016/11/10.
  */
 
-public class XfermodeTestView extends View {
+public class XferModeTestView extends View {
     private Paint mPaint;
     private int mWidth;
     private int mHeight;
     private Xfermode mXfermode;
 
-    public XfermodeTestView(Context context) {
+    public XferModeTestView(Context context) {
         this(context, null);
     }
 
-    public XfermodeTestView(Context context, AttributeSet attrs) {
+    public XferModeTestView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         mPaint = new Paint();

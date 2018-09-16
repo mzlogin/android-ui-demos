@@ -18,7 +18,7 @@ import org.mazhuang.androiduidemos.activity.PieChartActivity;
 import org.mazhuang.androiduidemos.activity.ScaleTypeTestActivity;
 import org.mazhuang.androiduidemos.activity.SkewTestActivity;
 import org.mazhuang.androiduidemos.activity.TrafficBarViewActivity;
-import org.mazhuang.androiduidemos.activity.XfermodeTestActivity;
+import org.mazhuang.androiduidemos.activity.XferModeTestActivity;
 
 /**
  * Created by mazhuang on 4/19.
@@ -47,7 +47,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter implement
             },
             {
                     new ListItem("scaleTypeTest", ScaleTypeTestActivity.class),
-                    new ListItem("XferModeTest", XfermodeTestActivity.class),
+                    new ListItem("XferModeTest", XferModeTestActivity.class),
                     new ListItem("ContraintLayout Test", ContraintLayoutTestActivity.class)
             }
     };
