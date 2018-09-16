@@ -23,7 +23,8 @@
         <activity android:name=".activity.ScaleTypeTestActivity" />
         <activity android:name=".activity.BaseActivity" />
         <activity android:name=".activity.XfermodeTestActivity" />
-        <activity android:name=".activity.ContraintLayoutTestActivity"></activity>
+        <activity android:name=".activity.ContraintLayoutTestActivity" />
+        <activity android:name=".activity.BadgeTestActivity"></activity>
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import org.mazhuang.androiduidemos.R;
+import org.mazhuang.androiduidemos.activity.BadgeTestActivity;
 import org.mazhuang.androiduidemos.activity.ContraintLayoutTestActivity;
 import org.mazhuang.androiduidemos.activity.FragmentUpdateUIActivity;
 import org.mazhuang.androiduidemos.activity.NotificationDemoActivity;
@@ -30,7 +31,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter implement
             "Fragments",
             "Notifications",
             "Custom Views",
-            "Original Views"
+            "Original Views",
+            "3rd Libraries"
     };
 
     private ListItem[][] mChildren = {
@@ -45,10 +47,13 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter implement
                     new ListItem("PieChartView", PieChartActivity.class),
                     new ListItem("SkewTestView", SkewTestActivity.class)
             },
-            {
+            {// system views test
                     new ListItem("scaleTypeTest", ScaleTypeTestActivity.class),
                     new ListItem("XferModeTest", XferModeTestActivity.class),
                     new ListItem("ContraintLayout Test", ContraintLayoutTestActivity.class)
+            },
+            {// third party libraries test
+                    new ListItem("BadgeView Test", BadgeTestActivity.class)
             }
     };
 
