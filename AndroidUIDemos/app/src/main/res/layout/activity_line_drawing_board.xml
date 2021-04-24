@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LineDrawingBoardActivity">
+
+    <Switch
+        android:id="@+id/line_type_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textOn="@string/dash_line"
+        android:textOff="@string/solid_line"/>
+
+    <org.mazhuang.androiduidemos.view.LineDrawingBoardView
+        android:id="@+id/line_drawing_board"
+        app:layout_constraintTop_toBottomOf="@id/line_type_switch"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</android.support.constraint.ConstraintLayout>
